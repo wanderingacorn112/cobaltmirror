@@ -1,30 +1,28 @@
-# Makefile
-
-.PHONY: up down init clean logs restart create-user
+.PHONY: up down init clean logs restart create-user rebuild
 
 up:
-	docker compose up -d
+	sudo docker compose up -d
 
 down:
-	docker compose down
+	sudo docker compose down
 
 init:
-	@echo "🔧 Initializing Airflow DB..."
-	docker compose run --rm airflow-webserver airflow db init
+	sudo docker compose run --rm airflow-webserver airflow db init
 
 create-user:
-	@echo "👤 Creating Airflow admin user..."
-	docker compose run --rm airflow-webserver airflow users create \
+	sudo docker compose run --rm airflow-webserver airflow users create \
 		--username admin --password admin \
 		--firstname OSINT --lastname Admin \
 		--role Admin --email admin@example.com
 
-restart: down up
+rebuild:
+	sudo docker compose down -v
+	sudo docker compose build
+	sudo docker compose up -d
 
 logs:
-	docker compose logs -f --tail=100
+	sudo docker compose logs -f --tail=100
 
 clean:
-	@echo "🧹 Removing containers and volumes..."
-	docker compose down -v
-	sudo rm -rf logs/ .airflow/
+	sudo docker compose down -v
+	sudo rm -rf logs/ .airflow/ __pycache__/
