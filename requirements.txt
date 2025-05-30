@@ -1,5 +1,14 @@
+# requirements.txt  (patched)
+
 apache-airflow==2.9.0
 feedparser
 sqlalchemy
 psycopg[binary]
 pydantic
+
+# --- added in patch sequence 1.1 ---
+cryptography>=42.0.0      # used by bootstrap.sh for Fernet key
+alembic                   # DB migrations (Step 3)
+pytest                    # unit & smoke tests (Step 5)
+pytest-asyncio            # future async scrapers
+python-dotenv             # optional .env parsing in local scripts
