@@ -19,7 +19,6 @@ RUN pip install --no-cache-dir \
     tqdm
 
 FROM python:3.11-slim
-RUN which cobaltmirror-enrich
 WORKDIR /app
 COPY . /app
 ENTRYPOINT ["cobaltmirror-enrich"]
