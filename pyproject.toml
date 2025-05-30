@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cobaltmirror-enrichment"
+version = "0.1.0"
+description = "NLP & Enrichment layer for the Cobalt Mirror OSINT platform"
+authors = [{ name = "Cobalt Mirror Team", email = "info@cobaltmirror.io" }]
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["osint", "nlp", "geoparsing", "temporal", "sentiment"]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent"
+]
+
+#Runtime dependencies — align with Phase 1 code
+[project.dependencies]
+spacy = ">=3.8"
+sentence-transformers = ">=4.1"
+geopy = ">=2.4"
+heideltime = ">=1.11.1"
+backoff = ">=2.2"
+cachetools = ">=5.3"
+pydantic = ">=2.7"
+fastapi = ">=0.110"
+uvicorn = ">=0.29"
+click = ">=8.1"
+
+# 🏃‍♂️  CLI entry‑point
+[project.scripts]
+cobaltmirror-enrich = "cobaltmirror_enrichment.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["cobaltmirror_enrichment"]

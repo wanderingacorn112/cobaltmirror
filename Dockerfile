@@ -18,6 +18,14 @@ RUN pip install --no-cache-dir \
     sqlalchemy \
     tqdm
 
+FROM python:3.11-slim
+ENV POETRY_VERSION=1.8.2
+RUN pip install --no-cache-dir "poetry==${POETRY_VERSION}"
+WORKDIR /app
+COPY . /app
+RUN poetry install --no-root --no-dev
+ENTRYPOINT ["cobaltmirror-enrich"]
+
 # Optional: install NLP tools like spaCy later in enrichment container
 # RUN pip install spacy
 

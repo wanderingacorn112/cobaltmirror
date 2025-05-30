@@ -1,0 +1,9 @@
+# tests/test_ner_eval.py
+from cobaltmirror_enrichment import build_pipeline, extract_entities
+
+def test_person_extraction():
+    nlp = build_pipeline()
+    doc = "US President Joe Biden met reporters."
+    output = extract_entities(doc, nlp)
+    labels = {e["type"] for e in output["entities"]}
+    assert "PERSON" in labels
