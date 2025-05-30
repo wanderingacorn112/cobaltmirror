@@ -2,14 +2,16 @@ version: "3.9"
 
 x-airflow-common:
   &airflow-common
-  image: apache/airflow:2.9.0-python3.11
+  build:
+    context: .
+    dockerfile: Dockerfile
   env_file:
     - .env
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY}
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN}
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
   volumes:
     - ./dags:/opt/airflow/dags
@@ -23,10 +25,10 @@ services:
   postgres:
     image: postgis/postgis:15-3.4
     env_file: .env
-    volumes:
-      - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   airflow-webserver:
     <<: *airflow-common
