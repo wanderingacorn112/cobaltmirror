@@ -26,6 +26,11 @@ ENTRYPOINT ["cobaltmirror-enrich"]
 # Optional: install NLP tools like spaCy later in enrichment container
 # RUN pip install spacy
 
+RUN groupadd --gid 50000 airflow && \
+    useradd --uid 50000 --gid airflow --home /opt/airflow --shell /bin/bash airflow && \
+    mkdir -p /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins /opt/airflow/connectors && \
+    chown -R airflow: /opt/airflow
+
 # Ensure Airflow user owns key folders
 RUN mkdir -p /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins /opt/airflow/connectors && \
     chown -R airflow: /opt/airflow
