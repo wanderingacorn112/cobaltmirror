@@ -1,20 +1,28 @@
-# Dockerfile  – builds the Airflow runtime with project deps baked in
-
+# Use official Airflow base image
 FROM apache/airflow:2.9.0-python3.11
-
-USER root
-RUN pip install --no-cache-dir psycopg2-binary
 
 USER airflow
 
-###
+# Install PostgreSQL driver and useful Airflow providers
+RUN pip install --no-cache-dir \
+    psycopg2-binary \
+    apache-airflow-providers-postgres \
+    apache-airflow-providers-slack \
+    apache-airflow-providers-http \
+    apache-airflow-providers-amazon \
+    apache-airflow-providers-docker \
+    apache-airflow-providers-ftp \
+    feedparser \
+    requests \
+    pandas \
+    sqlalchemy \
+    tqdm
 
-FROM apache/airflow:2.9.0-python3.11
+# Optional: install NLP tools like spaCy later in enrichment container
+# RUN pip install spacy
 
-# Install Python dependencies for the whole stack
-COPY requirements.txt /tmp/
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+# Ensure Airflow user owns key folders
+RUN mkdir -p /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins /opt/airflow/connectors && \
+    chown -R airflow: /opt/airflow
 
-# Copy source so scheduler + webserver both see DAGs & connectors
-COPY . /opt/airflow
-ENV PYTHONPATH="/opt/airflow"
+USER airflow

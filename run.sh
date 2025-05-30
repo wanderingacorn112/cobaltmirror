@@ -12,9 +12,9 @@ case "$1" in
     ;;
   create-user)
     sudo docker compose run --rm airflow-webserver airflow users create \
-      --username admin --password admin \
+      --username admin --password password \
       --firstname OSINT --lastname Admin \
-      --role Admin --email admin@example.com
+      --role Admin --email #####
     ;;
   rebuild)
     sudo docker compose down -v

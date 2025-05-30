@@ -12,3 +12,13 @@ alembic                   # DB migrations (Step 3)
 pytest                    # unit & smoke tests (Step 5)
 pytest-asyncio            # future async scrapers
 python-dotenv             # optional .env parsing in local scripts
+
+# --- added in patch sequence 1.2 ---
+praw                     # Reddit API client
+telethon                # Telegram API client
+gnewsclient            # Google News API client
+scrapy                 # web scraping framework
+
+# --- added in patch sequence 1.3 ---
+beautifulsoup4          # HTML parsing for web scraping
+requests                # HTTP requests for web scraping
