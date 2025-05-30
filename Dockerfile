@@ -22,7 +22,6 @@ FROM python:3.11-slim
 RUN pip install .
 WORKDIR /app
 COPY . /app
-RUN poetry install --no-root --no-dev
 ENTRYPOINT ["cobaltmirror-enrich"]
 
 # Optional: install NLP tools like spaCy later in enrichment container
