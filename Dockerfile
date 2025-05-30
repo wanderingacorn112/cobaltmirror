@@ -20,6 +20,7 @@ RUN pip install --no-cache-dir \
 
 FROM python:3.11-slim
 RUN pip install .
+RUN which cobaltmirror-enrich
 WORKDIR /app
 COPY . /app
 ENTRYPOINT ["cobaltmirror-enrich"]
